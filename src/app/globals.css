@@ -1,0 +1,158 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Earth-tone, muted color palette - calm, spiritual, contemplative */
+  --background: #faf7f2; /* Off-white, cream */
+  --foreground: #4a4036; /* Dark charcoal, soft black */
+  --card: #fefefe9; /* Soft cream, slightly darker than background */
+  --card-foreground: #4a4036;
+  --popover: #fefefe9;
+  --popover-foreground: #4a4036;
+  --primary: #8b7355; /* Warm earthy brown, muted */
+  --primary-foreground: #faf7f2;
+  --secondary: #d4c5b0; /* Soft sandstone */
+  --secondary-foreground: #4a4036;
+  --muted: #e5e5e5; /* Very warm gray, almost white */
+  --muted-foreground: #6b6056; /* Warm brown-gray */
+  --accent: #c9a777; /* Warm tan/beige */
+  --accent-foreground: #4a4036;
+  --destructive: #924536; /* Muted brownish-red */
+  --border: #e8e0d6; /* Soft brown-tan border */
+  --input: #faf7f2;
+  --ring: #8b7355;
+}
+
+.dark {
+  --background: #2d2a26; /* Soft dark earth tone */
+  --foreground: #e8e0d6;
+  --card: #3d3a36;
+  --card-foreground: #e8e0d6;
+  --popover: #3d3a36;
+  --popover-foreground: #e8e0d6;
+  --primary: #c9a777;
+  --primary-foreground: #2d2a26;
+  --secondary: #5c5448;
+  --secondary-foreground: #e8e0d6;
+  --muted: #4a4036;
+  --muted-foreground: #d4c5b0;
+  --accent: #8b7355;
+  --accent-foreground: #2d2a26;
+  --destructive: #b8736e;
+  --border: #5c5448;
+  --input: #2d2a26;
+  --ring: #c9a777;
+}
+
+* {
+  border-color: var(--border);
+  outline-color: var(--ring);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Custom scrollbar styling - subtle, calm */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f5f0eb;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(139, 115, 85, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(139, 115, 85, 0.5);
+}
+
+/* Gentle animations */
+@keyframes diya-glow {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.diya-glow {
+  animation: diya-glow 3s ease-in-out infinite;
+}
+
+/* Subtle pulse animation - slower, gentler */
+@keyframes gentle-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.animate-pulse {
+  animation: gentle-pulse 4s ease-in-out infinite;
+}
+
+@keyframes gentle-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: gentle-float 6s ease-in-out infinite;
+}
+
+/* Marquee animation for brand scrolling */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Hero background zoom animation (simulates video movement) */
+@keyframes heroZoom {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.hero-zoom-animation {
+  animation: heroZoom 20s ease-in-out infinite alternate;
+}
