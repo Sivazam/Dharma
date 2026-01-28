@@ -14,8 +14,11 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
 
+    console.log('Received contact form data:', body)
+
     // Validate input
     const validatedData = contactSchema.parse(body)
+    console.log('Validation successful:', validatedData)
 
     // Create a unique document ID using timestamp + random string
     const uniqueId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
@@ -31,8 +34,12 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     }
 
+    console.log('Attempting to save to Firestore...')
+
     // Save to Firestore 'formdata' collection
     const docRef = await addDoc(collection(db, 'formdata'), formData)
+
+    console.log('Document saved successfully with ID:', docRef.id)
 
     return NextResponse.json({
       success: true,
@@ -43,16 +50,20 @@ export async function POST(request: Request) {
       }
     })
   } catch (error) {
-    if (error instanceof z.ZodError) {
+    console.error('Error in contact submission:', error)
+    console.error('Error details:', JSON.stringify(error, null, 2))
+
+    // Handle Zod validation errors
+    if (error && typeof error === 'object' && 'issues' in error && Array.isArray(error.issues)) {
+      console.log('Zod validation error:', error.issues)
       return NextResponse.json(
-        { success: false, error: error.errors[0].message },
+        { success: false, error: error.issues[0]?.message || 'Validation error' },
         { status: 400 }
       )
     }
 
-    console.error('Error creating contact submission:', error)
     return NextResponse.json(
-      { success: false, error: 'Failed to submit message' },
+      { success: false, error: 'Failed to submit message. Please try again.' },
       { status: 500 }
     )
   }

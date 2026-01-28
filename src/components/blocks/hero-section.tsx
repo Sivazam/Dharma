@@ -44,7 +44,7 @@ const HeroHeader = () => {
 
   return (
     <header className="fixed top-0 z-50 w-full pt-2">
-      <nav data-state={menuState && 'active'}>
+      <nav>
         <div
           className={cn(
             'mx-auto max-w-7xl px-6 md:px-12 transition-all duration-500 rounded-2xl',
@@ -84,8 +84,12 @@ const HeroHeader = () => {
 
             <div
               className={cn(
-                'bg-black/30 backdrop-blur-md group-data-[state=active]:block mb-4 md:mb-6 hidden w-full flex-wrap items-center justify-end space-y-3 md:space-y-0 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-4 lg:space-y-0 lg:bg-transparent lg:p-0 lg:shadow-none rounded-lg md:rounded-none',
-                scrolled && '!bg-white/95 !backdrop-blur-md'
+                'absolute top-full left-0 right-0 mx-auto backdrop-blur-xl max-w-7xl px-6 md:px-12 py-6 md:py-8 lg:relative lg:top-auto lg:left-auto lg:right-auto lg:backdrop-blur-none lg:px-0 lg:py-0 lg:w-fit lg:gap-4 lg:space-y-0 lg:flex lg:flex-row lg:items-center lg:justify-end transition-all duration-300 rounded-b-2xl',
+                scrolled
+                  ? 'bg-white/98 shadow-lg'
+                  : 'bg-white/95 shadow-xl',
+                menuState ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4 pointer-events-none',
+                'lg:opacity-100 lg:visible lg:translate-y-0 lg:pointer-events-auto lg:bg-transparent lg:backdrop-blur-none lg:rounded-none lg:shadow-none'
               )}
             >
               <div className="lg:hidden">
@@ -94,7 +98,8 @@ const HeroHeader = () => {
                     <li key={index}>
                       <Link
                         href={item.href}
-                        className="text-white/90 hover:text-white transition-colors duration-200 block"
+                        onClick={() => setMenuState(false)}
+                        className="text-foreground/80 hover:text-foreground hover:bg-foreground/5 transition-all duration-200 block px-3 py-2 rounded-lg"
                       >
                         <span>{item.name}</span>
                       </Link>
@@ -102,29 +107,23 @@ const HeroHeader = () => {
                   ))}
                 </ul>
               </div>
-              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
+              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit lg:w-auto">
                 <Button
                   asChild
                   variant="outline"
                   size="default"
-                  className={scrolled
-                    ? 'border-foreground/20 hover:bg-foreground/5 text-foreground transition-all duration-200'
-                    : 'border-white/40 hover:bg-white/10 text-white transition-all duration-200 bg-white/10 backdrop-blur-sm'
-                  }
+                  className="border-foreground/20 hover:bg-foreground/5 text-foreground/80 hover:text-foreground transition-all duration-200"
                 >
-                  <Link href="#categories">
+                  <Link href="#categories" onClick={() => setMenuState(false)}>
                     <span>Explore</span>
                   </Link>
                 </Button>
                 <Button
                   asChild
                   size="default"
-                  className={scrolled
-                    ? 'bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-200'
-                    : 'bg-white hover:bg-white/90 text-black transition-all duration-200'
-                  }
+                  className="bg-amber-800 hover:bg-amber-700 text-white border-2 border-amber-700 hover:border-amber-600 transition-all duration-200"
                 >
-                  <Link href="#categories">
+                  <Link href="#categories" onClick={() => setMenuState(false)}>
                     <span className="flex items-center gap-2">
                       <Heart className="h-4 w-4" />
                       Start Donating
@@ -142,6 +141,49 @@ const HeroHeader = () => {
 
 export function HeroSection() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const [wordIndex, setWordIndex] = useState(0)
+  const [text, setText] = useState('')
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  const words = [
+    'Daily Habit',
+    'Sacred Practice',
+    'Way of Life',
+    'Spiritual Journey',
+    'Timeless Tradition',
+    'Living Purpose'
+  ]
+
+  useEffect(() => {
+    const currentWord = words[wordIndex]
+    const typingSpeed = 100
+    const deletingSpeed = 50
+    const pauseAfterTyping = 2000
+    const pauseAfterDeleting = 500
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        // Typing
+        if (text.length < currentWord.length) {
+          setText(currentWord.slice(0, text.length + 1))
+        } else {
+          // Finished typing, wait before deleting
+          setTimeout(() => setIsDeleting(true), pauseAfterTyping)
+        }
+      } else {
+        // Deleting
+        if (text.length > 0) {
+          setText(currentWord.slice(0, text.length - 1))
+        } else {
+          // Finished deleting, move to next word
+          setIsDeleting(false)
+          setWordIndex((prev) => (prev + 1) % words.length)
+        }
+      }
+    }, isDeleting ? deletingSpeed : typingSpeed)
+
+    return () => clearTimeout(timeout)
+  }, [text, isDeleting, wordIndex, words])
 
   return (
     <>
@@ -174,28 +216,44 @@ export function HeroSection() {
 
           {/* Content */}
           <div className="relative z-20 h-full flex items-center">
-            <div className="mx-auto max-w-7xl px-6 lg:px-12 w-full">
-              <div className="max-w-3xl mx-auto text-center">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-6 md:mb-8">
-                  <img
-                    src="/pasted_image_1769573139302.png"
-                    alt="One Hundi in Every Home"
-                    className="w-5 h-5 md:w-6 md:h-6 object-contain"
-                  />
-                  <span className="text-xs md:text-sm font-medium text-white/95">
-                    One Hundi in Every Home
-                  </span>
+            <div className="mx-auto max-w-7xl px-6 lg:px-12 w-full h-full flex flex-col items-center justify-center py-8 md:py-12" style={{ paddingTop: 'calc(8rem + 1rem)' }}>
+              <div className="max-w-3xl mx-auto grid gap-y-2 md:gap-y-3 grid-cols-1 place-items-center text-center">
+                {/* Chip Badge */}
+                <div className="inline-flex justify-center">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+                    <img
+                      src="/pasted_image_1769573139302.png"
+                      alt="One Hundi in Every Home"
+                      className="w-5 h-5 md:w-6 md:h-6 object-contain"
+                    />
+                    <span className="text-xs md:text-sm font-medium text-white/95">
+                      One Hundi in Every Home
+                    </span>
+                  </div>
                 </div>
 
-                <h1 className="mb-6 md:mb-8 text-4xl md:text-5xl lg:text-6xl lg:text-7xl font-normal leading-tight tracking-tight text-white mb-10 md:mb-12">
-                  Dharma as a Daily Habit
-                </h1>
+                {/* H1 Title */}
+                <div className="text-center">
+                  <h1 className="h-[3.5em] md:h-[3em] lg:h-[2.8em] text-3xl md:text-4xl lg:text-5xl font-normal leading-tight tracking-tight text-white">
+                    <span className="block">Dharma as a</span>
+                    <span className="relative inline-flex items-center h-[1.2em] md:h-[1.15em] lg:h-[1.1em]">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-white to-amber-200 font-semibold animate-gradient">
+                        {text}
+                      </span>
+                      <span className="ml-1 w-1 h-12 md:h-16 bg-amber-400 animate-pulse rounded-full"></span>
+                    </span>
+                  </h1>
+                </div>
 
-                <p className="mb-12 md:mb-16 max-w-2xl mx-auto text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed font-light">
-                  Rooted in Sanatana Dharma, make giving a daily sacred practice. Through seven sacred categories of donation, we bring timeless wisdom of our traditions into modern, meaningful action.
-                </p>
+                {/* Description */}
+                <div className="text-center pb-6 md:pb-8">
+                  <p className="h-[3.5em] md:h-[3.5em] lg:h-[3em] max-w-2xl mx-auto text-base md:text-lg lg:text-xl text-white/90 leading-relaxed font-light">
+                    Rooted in Sanatana Dharma, make giving a daily sacred practice. Through seven sacred categories of donation, we bring timeless wisdom of our traditions into modern, meaningful action.
+                  </p>
+                </div>
 
-                <div className="flex items-center justify-center gap-4 md:gap-6 flex-wrap">
+                {/* Buttons */}
+                <div className="flex items-center justify-center gap-4 md:gap-6 flex-wrap text-center pt-6 md:pt-8">
                   <Button
                     asChild
                     size="lg"

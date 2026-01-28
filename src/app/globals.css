@@ -156,3 +156,18 @@ body {
 .hero-zoom-animation {
   animation: heroZoom 20s ease-in-out infinite alternate;
 }
+
+/* Gradient text animation for typing effect */
+@keyframes gradient-flow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-flow 3s ease-in-out infinite;
+}

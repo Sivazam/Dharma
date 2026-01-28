@@ -1,9 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Heart } from 'lucide-react'
+import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react'
+import { Navigation, Autoplay } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
 
 interface Category {
   slug: string
@@ -11,6 +15,7 @@ interface Category {
   title: string
   description: string
   icon: string
+  color: string
   impact: string
 }
 
@@ -19,15 +24,33 @@ interface CategoriesCarouselProps {
 }
 
 export function CategoriesCarousel({ categories }: CategoriesCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const cardsToShow = typeof window !== 'undefined' ? (window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1) : 1
+  const swiperRef = useRef<SwiperRef>(null)
+  const [isPaused, setIsPaused] = useState(false)
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? categories.length - cardsToShow : prev - 1))
+  const slideNext = () => {
+    if (swiperRef.current) {
+      swiperRef.current.swiper.slideNext()
+    }
   }
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev >= categories.length - cardsToShow ? 0 : prev + 1))
+  const slidePrev = () => {
+    if (swiperRef.current) {
+      swiperRef.current.swiper.slidePrev()
+    }
+  }
+
+  const handleMouseEnter = () => {
+    setIsPaused(true)
+    if (swiperRef.current) {
+      swiperRef.current.swiper.autoplay.stop()
+    }
+  }
+
+  const handleMouseLeave = () => {
+    setIsPaused(false)
+    if (swiperRef.current) {
+      swiperRef.current.swiper.autoplay.start()
+    }
   }
 
   return (
@@ -46,7 +69,7 @@ export function CategoriesCarousel({ categories }: CategoriesCarouselProps) {
         {/* Navigation Buttons */}
         <div className="flex items-center justify-center gap-4 mb-8">
           <Button
-            onClick={handlePrev}
+            onClick={slidePrev}
             variant="outline"
             size="icon"
             className="rounded-full border-2 border-primary/30 hover:border-primary/50 hover:bg-primary/10"
@@ -54,7 +77,7 @@ export function CategoriesCarousel({ categories }: CategoriesCarouselProps) {
             <ChevronLeft className="h-5 w-5" />
           </Button>
           <Button
-            onClick={handleNext}
+            onClick={slideNext}
             variant="outline"
             size="icon"
             className="rounded-full border-2 border-primary/30 hover:border-primary/50 hover:bg-primary/10"
@@ -63,28 +86,49 @@ export function CategoriesCarousel({ categories }: CategoriesCarouselProps) {
           </Button>
         </div>
 
-        {/* Cards Container */}
-        <div className="overflow-hidden">
-          <div
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{
-              transform: `translateX(-${currentIndex * (100 / cardsToShow)}%)`,
+        {/* Swiper Container */}
+        <div 
+          className="relative"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <Swiper
+            ref={swiperRef}
+            modules={[Navigation, Autoplay]}
+            spaceBetween={24}
+            slidesPerView={1}
+            loop={true}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: false, // We handle this manually
             }}
+            navigation={{
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 24,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 32,
+              },
+            }}
+            className="categories-swiper !pb-16"
           >
             {categories.map((category, index) => (
-              <div
-                key={index}
-                className="flex-shrink-0 px-3"
-                style={{ width: `${100 / cardsToShow}%` }}
-              >
-                <Card className="group bg-card border-border/30 hover:border-primary/40 transition-all duration-300 rounded-2xl hover:-translate-y-1 h-full">
+              <SwiperSlide key={index} className="!h-auto">
+                <Card className="group bg-card border-border/30 hover:border-primary/40 transition-all duration-300 rounded-2xl hover:-translate-y-1 h-full flex flex-col">
                   <div className="h-2 bg-gradient-to-r from-primary/50 to-primary/60"></div>
-                  <CardHeader className="pb-5">
+                  <CardHeader className="pb-5 flex-shrink-0">
                     <div className="flex items-start gap-3">
-                      <div className="text-4xl md:text-5xl">
+                      <div className="text-4xl md:text-5xl flex-shrink-0">
                         {category.icon}
                       </div>
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <CardTitle className="text-2xl md:text-3xl font-normal text-foreground group-hover:text-primary transition-colors">
                           {category.name}
                         </CardTitle>
@@ -94,36 +138,32 @@ export function CategoriesCarousel({ categories }: CategoriesCarouselProps) {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="space-y-5 pt-5">
-                    <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
+                  <CardContent className="flex-1 flex flex-col pt-5">
+                    <p className="text-base md:text-lg text-foreground/70 leading-relaxed mb-4">
                       {category.description}
                     </p>
-                    <div className="flex items-center justify-between pt-4 border-t border-border/20">
-                      <div className="flex items-center gap-2 text-sm md:text-base text-primary/80 font-medium">
-                        <span className="text-lg md:text-xl">✨</span>
-                        <span>{category.impact}</span>
-                      </div>
-                      <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-foreground/30 group-hover:text-primary/80 group-hover:translate-x-1 transition-all duration-200" />
+                    <p className="text-sm md:text-base text-foreground/60 leading-relaxed mb-4">
+                      {category.impact}
+                    </p>
+                    <div className="mt-auto pt-4 border-t border-border/20">
+                      <Button
+                        asChild
+                        size="lg"
+                        className="w-full group relative overflow-hidden bg-amber-800 hover:bg-amber-700 text-white hover:to-amber-700 rounded-full px-6 py-4 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 border-2 border-amber-700"
+                      >
+                        <a href={`#${category.slug}`}>
+                          <span className="relative z-10 flex items-center justify-center gap-2 text-base md:text-lg font-semibold tracking-wide">
+                            <Heart className="h-5 w-5" />
+                            Donate
+                          </span>
+                        </a>
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
-              </div>
+              </SwiperSlide>
             ))}
-          </div>
-        </div>
-
-        {/* Dots Indicator */}
-        <div className="flex items-center justify-center gap-2 mt-8">
-          {categories.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(Math.min(index, categories.length - cardsToShow))}
-              className={`h-2 rounded-full transition-all duration-200 ${
-                index === currentIndex ? 'w-6 bg-primary' : 'w-2 bg-primary/30'
-              }`}
-              aria-label={`Go to category ${index + 1}`}
-            />
-          ))}
+          </Swiper>
         </div>
       </div>
     </section>

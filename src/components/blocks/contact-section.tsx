@@ -40,13 +40,14 @@ export function ContactSection() {
           description: 'Thank you for contacting us. We will get back to you soon.',
         })
       } else {
-        throw new Error('Failed to send message')
+        const data = await response.json()
+        throw new Error(data.error || 'Failed to send message')
       }
     } catch (error) {
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'Failed to send your message. Please try again.',
+        description: error instanceof Error ? error.message : 'Failed to send your message. Please try again.',
       })
     } finally {
       setIsSubmitting(false)
@@ -142,7 +143,10 @@ export function ContactSection() {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-3">
-                        <Label htmlFor="name" className="text-base font-normal text-foreground">Full Name</Label>
+                        <div className="flex items-center justify-between">
+                          <Label htmlFor="name" className="text-base font-normal text-foreground">Full Name</Label>
+                          <span className="text-xs text-foreground/50">Min 2 chars</span>
+                        </div>
                         <Input
                           id="name"
                           placeholder="Your name"
@@ -150,6 +154,7 @@ export function ContactSection() {
                           required
                           value={formData.name}
                           onChange={handleChange}
+                          minLength={2}
                         />
                       </div>
                       <div className="space-y-3">
@@ -166,7 +171,10 @@ export function ContactSection() {
                       </div>
                     </div>
                     <div className="space-y-3">
-                      <Label htmlFor="subject" className="text-base font-normal text-foreground">Subject</Label>
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="subject" className="text-base font-normal text-foreground">Subject</Label>
+                        <span className="text-xs text-foreground/50">Min 3 chars</span>
+                      </div>
                       <Input
                         id="subject"
                         placeholder="How can we help you?"
@@ -174,10 +182,14 @@ export function ContactSection() {
                         required
                         value={formData.subject}
                         onChange={handleChange}
+                        minLength={3}
                       />
                     </div>
                     <div className="space-y-3">
-                      <Label htmlFor="message" className="text-base font-normal text-foreground">Message</Label>
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="message" className="text-base font-normal text-foreground">Message</Label>
+                        <span className="text-xs text-foreground/50">Min 10 chars</span>
+                      </div>
                       <Textarea
                         id="message"
                         placeholder="Tell us more..."
@@ -186,13 +198,14 @@ export function ContactSection() {
                         required
                         value={formData.message}
                         onChange={handleChange}
+                        minLength={10}
                       />
                     </div>
                     <Button
                       type="submit"
                       size="lg"
                       disabled={isSubmitting}
-                      className="group relative overflow-hidden bg-gradient-to-r from-primary to-primary/90 text-primary-foreground hover:from-primary/95 hover:to-primary/85 rounded-full px-10 py-5 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 w-full"
+                      className="group relative overflow-hidden bg-amber-800 hover:bg-amber-700 text-white hover:to-amber-700 rounded-full px-10 py-5 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 w-full border-2 border-amber-700"
                     >
                       {isSubmitting ? (
                         <span>Sending...</span>

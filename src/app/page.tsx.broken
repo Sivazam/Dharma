@@ -5,7 +5,7 @@ import { CategoriesCarousel } from '@/components/blocks/categories-carousel'
 import { ContactSection } from '@/components/blocks/contact-section'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Heart, ChevronRight, Shield, Users, Target, HeartHandshake, BadgeCheck, BarChart3, ArrowRight } from 'lucide-react'
+import { Heart, ChevronRight, Shield, Users, Target, HeartHandshake } from 'lucide-react'
 
 // Dharma Hundi Main Page
 
@@ -260,8 +260,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Vision Section */}
-      <section id="vision" className="py-24 md:py-28 bg-gradient-to-b from-background via-primary/5 to-background relative overflow-hidden">
+      {/* Impact Stats Section */}
+      <section className="py-24 md:py-28 bg-secondary/10 relative overflow-hidden">
         {/* Decorative Background Elements */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-0 left-0 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
@@ -375,7 +375,7 @@ export default function Home() {
       </section>
 
 
-            {/* Transparency Section */}
+      {/* Transparency Section */}
       <section id="transparency" className="py-24 md:py-28 bg-gradient-to-b from-primary/5 via-background to-background relative overflow-hidden">
         {/* Decorative Background Elements */}
         <div className="absolute inset-0 opacity-5">
@@ -385,28 +385,15 @@ export default function Home() {
 
         <div className="container mx-auto px-6 md:px-12">
           <div className="max-w-6xl mx-auto relative z-10">
-            {/* Section Header */}
-            <div className="text-center mb-16 md:mb-20 space-y-6">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal text-foreground leading-tight">
-                Every Rupee<br />Accounted For
-              </h2>
-              <p className="text-lg md:text-xl text-foreground/70 max-w-3xl mx-auto leading-relaxed">
-                We believe in complete transparency. Your trust is sacred, and we prove it through real-time tracking, verified organizations, and direct allocation of every donation.
-              </p>
-            </div>
-
-            {/* Main Stats Grid */}
-            <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-12">
-              {/* Direct Allocation Card */}
               <Card className="group bg-card border-border/30 hover:border-primary/40 hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-300 rounded-2xl overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-bl-full"></div>
                 <CardHeader className="pb-6">
                   <div className="flex items-center justify-center mb-4">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 text-white shadow-lg">
-                      <ArrowRight className="w-8 h-8" />
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/80 text-white shadow-lg">
+                      <span className="text-3xl font-bold">100%</span>
                     </div>
                   </div>
-                  <CardTitle className="text-2xl md:text-3xl font-normal text-foreground group-hover:text-amber-600 transition-colors mb-2">
+                  <CardTitle className="text-2xl md:text-3xl font-normal text-foreground group-hover:text-primary transition-colors mb-2">
                     Direct Allocation
                   </CardTitle>
                 </CardHeader>
@@ -423,7 +410,7 @@ export default function Home() {
                 <CardHeader className="pb-6">
                   <div className="flex items-center justify-center mb-4">
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-green-600 to-green-700 text-white shadow-lg">
-                      <BadgeCheck className="w-8 h-8" />
+                      <span className="text-2xl">✓</span>
                     </div>
                   </div>
                   <CardTitle className="text-2xl md:text-3xl font-normal text-foreground group-hover:text-green-600 transition-colors mb-2">
@@ -443,7 +430,7 @@ export default function Home() {
                 <CardHeader className="pb-6">
                   <div className="flex items-center justify-center mb-4">
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-lg">
-                      <BarChart3 className="w-8 h-8" />
+                      <span className="text-2xl">📊</span>
                     </div>
                   </div>
                   <CardTitle className="text-2xl md:text-3xl font-normal text-foreground group-hover:text-blue-600 transition-colors mb-2">
@@ -459,21 +446,20 @@ export default function Home() {
             </div>
 
             {/* Trust Banner Section */}
-            <div className="bg-gradient-to-r from-amber-800 to-amber-900 rounded-2xl p-6 sm:p-8 md:p-12 shadow-2xl relative overflow-hidden text-center">
-              {/* Decorative Pattern */}
+            <div className="bg-gradient-to-r from-amber-800 to-amber-900 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden text-center">
               <div className="absolute inset-0 opacity-5">
-                <div className="absolute top-0 right-0 w-32 sm:w-48 h-32 sm:h-48 bg-white/10 rounded-full blur-3xl"></div>
-                <div className="absolute bottom-0 left-0 w-24 sm:w-32 h-24 sm:h-32 bg-white/5 rounded-full blur-2xl"></div>
+                <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
               </div>
 
-              <div className="relative z-10 space-y-4 sm:space-y-6">
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-                  <div className="text-5xl sm:text-6xl md:text-7xl">🛡️</div>
-                  <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal text-white leading-tight">
+              <div className="relative z-10 space-y-6">
+                <div className="inline-flex items-center gap-4 mb-4">
+                  <div className="text-5xl md:text-6xl">🛡️</div>
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-normal text-white leading-tight">
                     Zero Tolerance<br />for Fraud
                   </h3>
                 </div>
-                <p className="text-sm sm:text-base md:text-lg text-white/90 leading-relaxed max-w-3xl mx-auto px-2">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed max-w-2xl mx-auto">
                   We maintain a zero-tolerance policy for any form of fraud. Your trust is sacred to us, and we protect it with the highest security standards.
                 </p>
               </div>
@@ -481,7 +467,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      {/* CTA Section */}
       <section className="py-24 md:py-28 bg-gradient-to-b from-secondary/20 via-transparent to-background relative overflow-hidden">
         {/* Decorative Background Pattern */}
         <div className="absolute inset-0 opacity-5">
@@ -503,7 +489,7 @@ export default function Home() {
               <Button
                 onClick={() => scrollToSection('categories')}
                 size="lg"
-                className="group relative overflow-hidden bg-amber-800 hover:bg-amber-700 text-white rounded-full px-10 py-5 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 border-2 border-amber-700"
+                className="group relative overflow-hidden bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-full px-10 py-5 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 hover:from-primary/95"
               >
                 <span className="relative z-10 flex items-center gap-2 text-base md:text-lg font-semibold tracking-wide">
                   <Heart className="h-5 w-5" />
