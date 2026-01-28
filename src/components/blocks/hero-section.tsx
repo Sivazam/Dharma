@@ -216,7 +216,7 @@ export function HeroSection() {
 
           {/* Content */}
           <div className="relative z-20 h-full flex items-center">
-            <div className="mx-auto max-w-7xl px-6 lg:px-12 w-full h-full flex flex-col items-center justify-center py-8 md:py-12" style={{ paddingTop: 'calc(8rem + 1rem)' }}>
+            <div className="mx-auto max-w-7xl px-6 lg:px-12 w-full h-full flex flex-col items-center justify-center py-8 md:py-12 pt-20 md:pt-32">
               <div className="max-w-3xl mx-auto grid gap-y-2 md:gap-y-3 grid-cols-1 place-items-center text-center">
                 {/* Chip Badge */}
                 <div className="inline-flex justify-center">
