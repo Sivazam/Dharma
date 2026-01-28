@@ -23,6 +23,16 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Dharma Hundi",
   description: "A Worldwide Dharma Movement - Making Dharma a Daily Habit",
+  icons: {
+    icon: "/logoz.jpg",
+  },
+  openGraph: {
+    title: "Dharma Hundi",
+    description: "A Worldwide Dharma Movement - Making Dharma a Daily Habit",
+    image: "/logoz.jpg",
+    url: "https://dharmahundi.com",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
