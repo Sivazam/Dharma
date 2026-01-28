@@ -24,12 +24,12 @@ export const metadata: Metadata = {
   title: "Dharma Hundi",
   description: "A Worldwide Dharma Movement - Making Dharma a Daily Habit",
   icons: {
-    icon: "/logoz.jpg",
+    icon: "https://firebasestorage.googleapis.com/v0/b/voice-62ddc.firebasestorage.app/o/dharmaLogo.png?alt=media&token=eca586ba-6b52-4328-8365-5db706212ab0",
   },
   openGraph: {
     title: "Dharma Hundi",
     description: "A Worldwide Dharma Movement - Making Dharma a Daily Habit",
-    image: "/logoz.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/voice-62ddc.firebasestorage.app/o/dharmaLogo.png?alt=media&token=eca586ba-6b52-4328-8365-5db706212ab0",
     url: "https://dharmahundi.com",
     type: "website",
   },
