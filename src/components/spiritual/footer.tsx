@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { Flame } from 'lucide-react'
 
 export function Footer() {
   return (
@@ -9,18 +8,22 @@ export function Footer() {
           {/* Logo & Quote */}
           <div className="space-y-5">
             <div className="flex items-center gap-3">
-              <Flame className="h-7 w-7 text-primary/70" />
+              <img
+                src="https://firebasestorage.googleapis.com/v0/b/voice-62ddc.firebasestorage.app/o/dharmaLogo.png?alt=media&token=eca586ba-6b52-4328-8365-5db706212ab0"
+                alt="Dharma Hundi Logo"
+                className="w-[65px] h-[65px] object-contain"
+              />
               <div className="relative">
                 <span className="text-lg md:text-xl font-medium tracking-wide text-foreground/80">
                   Dharma Hundi
                 </span>
               </div>
             </div>
-            <blockquote className="text-sm md:text-base italic text-foreground/60 border-l-2 border-primary/20 pl-4 py-2">
-              "धर्मो रक्षति रक्षति" (Dharma protects those who protect it)
+            <blockquote className="text-lg md:text-xl font-bold text-primary/90 border-l-4 border-primary/40 pl-4 py-3 bg-primary/5 rounded-r-lg">
+              "धर्मो रक्षति रक्षति"
             </blockquote>
-            <p className="text-sm md:text-base text-foreground/50 mt-2">
-              Follow Dharma. Live Dharma. Spread Dharma.
+            <p className="text-sm md:text-base text-foreground/70 leading-relaxed">
+              If you protect Dharma, Dharma protects you.
             </p>
           </div>
 
@@ -74,6 +77,16 @@ export function Footer() {
           <p className="mt-3 text-xs md:text-sm text-foreground/40">
             A Worldwide Dharma Movement - Making Dharma a Daily Habit
           </p>
+          <div className="mt-4 pt-4 border-t border-border/20">
+            <a
+              href="https://wa.me/919014882779?text=Hi%2C%20I%20have%20a%20software%20requirement."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary/80 hover:text-primary rounded-full text-sm md:text-base font-medium transition-all duration-200 border border-primary/20"
+            >
+              <span>Built by Harte Labs</span>
+            </a>
+          </div>
         </div>
       </div>
     </footer>

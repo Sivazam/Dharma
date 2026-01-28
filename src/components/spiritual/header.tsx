@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Menu, Flame, User, LogOut, Heart } from 'lucide-react'
+import { Menu, User, LogOut, Heart } from 'lucide-react'
 import { useState } from 'react'
 import { useAuth } from '@/contexts/auth-context'
 import { useToast } from '@/hooks/use-toast'
@@ -60,13 +60,15 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-saffron/20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-[60] w-full border-b border-saffron/20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="relative">
-            <Flame className="h-8 w-8 text-saffron diya-glow" />
-          </div>
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/voice-62ddc.firebasestorage.app/o/dharmaLogo.png?alt=media&token=eca586ba-6b52-4328-8365-5db706212ab0"
+            alt="Dharma Hundi Logo"
+            className="w-[65px] h-[65px] object-contain"
+          />
           <span className="text-xl font-bold bg-gradient-to-r from-saffron via-gold to-sandalwood bg-clip-text text-transparent">
             Dharma Hundi
           </span>

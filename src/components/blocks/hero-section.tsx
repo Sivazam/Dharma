@@ -1,11 +1,10 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { ChevronRight, Heart, Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Menu, X, ChevronRight, Flame } from 'lucide-react'
-import { useState, useEffect } from 'react'
 
 const menuItems = [
   { name: 'Vision', href: '#vision' },
@@ -17,7 +16,11 @@ const menuItems = [
 const Logo = ({ scrolled }: { scrolled: boolean }) => {
   return (
     <div className="flex items-center gap-3">
-      <Flame className={`h-7 w-7 transition-colors duration-500 ${scrolled ? 'text-primary/60' : 'text-white/80'}`} />
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/voice-62ddc.firebasestorage.app/o/dharmaLogo.png?alt=media&token=eca586ba-6b52-4328-8365-5db706212ab0"
+        alt="Dharma Hundi Logo"
+        className="w-[65px] h-[65px] object-contain"
+      />
       <div className="relative">
         <span className={`text-lg md:text-xl font-medium tracking-wide transition-colors duration-500 ${scrolled ? 'text-foreground/80' : 'text-white/90'}`}>
           Dharma Hundi
@@ -40,15 +43,12 @@ const HeroHeader = () => {
   }, [])
 
   return (
-    <header>
-      <nav
-        data-state={menuState && 'active'}
-        className="group fixed z-50 w-full pt-2"
-      >
+    <header className="fixed top-0 z-50 w-full pt-2">
+      <nav data-state={menuState && 'active'}>
         <div
           className={cn(
             'mx-auto max-w-7xl px-6 md:px-12 transition-all duration-500 rounded-2xl',
-            scrolled && 'bg-background/95 backdrop-blur-md shadow-sm my-2'
+            scrolled && 'bg-white/95 backdrop-blur-md shadow-sm my-2'
           )}
         >
           <div className="relative flex flex-wrap items-center justify-between gap-8 py-4 md:py-5">
@@ -84,8 +84,8 @@ const HeroHeader = () => {
 
             <div
               className={cn(
-                'bg-black/30 backdrop-blur-md group-data-[state=active]:block md:group-data-[state=active]:flex mb-4 md:mb-6 hidden w-full flex-wrap items-center justify-end space-y-3 md:space-y-0 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-4 lg:space-y-0 lg:bg-transparent lg:p-0 lg:shadow-none rounded-lg md:rounded-none',
-                scrolled && '!bg-background/95 !backdrop-blur-md'
+                'bg-black/30 backdrop-blur-md group-data-[state=active]:block mb-4 md:mb-6 hidden w-full flex-wrap items-center justify-end space-y-3 md:space-y-0 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-4 lg:space-y-0 lg:bg-transparent lg:p-0 lg:shadow-none rounded-lg md:rounded-none',
+                scrolled && '!bg-white/95 !backdrop-blur-md'
               )}
             >
               <div className="lg:hidden">
@@ -126,7 +126,7 @@ const HeroHeader = () => {
                 >
                   <Link href="#categories">
                     <span className="flex items-center gap-2">
-                      <Flame className="h-4 w-4" />
+                      <Heart className="h-4 w-4" />
                       Start Donating
                     </span>
                   </Link>
@@ -141,6 +141,8 @@ const HeroHeader = () => {
 }
 
 export function HeroSection() {
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+
   return (
     <>
       <HeroHeader />
@@ -148,12 +150,25 @@ export function HeroSection() {
         <section className="relative h-screen">
           {/* Video Background */}
           <div className="absolute inset-0 z-0 overflow-hidden">
-            <div
-              className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat hero-zoom-animation"
-              style={{
-                backgroundImage: "url('/hero-bg.jpg')"
-              }}
-            ></div>
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+              onPlay={() => setIsVideoPlaying(true)}
+            >
+              <source src="/hero-bg.mp4" type="video/mp4" />
+            </video>
+            {/* Fallback to image with animation if video doesn't load */}
+            {!isVideoPlaying && (
+              <div
+                className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat hero-zoom-animation"
+                style={{
+                  backgroundImage: "url('/hero-bg.jpg')"
+                }}
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/75 z-10"></div>
           </div>
 
@@ -161,9 +176,13 @@ export function HeroSection() {
           <div className="relative z-20 h-full flex items-center">
             <div className="mx-auto max-w-7xl px-6 lg:px-12 w-full">
               <div className="max-w-3xl mx-auto text-center">
-                <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-8 md:mb-10">
-                  <span className="text-2xl md:text-3xl">🪔</span>
-                  <span className="text-sm md:text-base font-medium text-white/95">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-6 md:mb-8">
+                  <img
+                    src="/pasted_image_1769573139302.png"
+                    alt="One Hundi in Every Home"
+                    className="w-5 h-5 md:w-6 md:h-6 object-contain"
+                  />
+                  <span className="text-xs md:text-sm font-medium text-white/95">
                     One Hundi in Every Home
                   </span>
                 </div>

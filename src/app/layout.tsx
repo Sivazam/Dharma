@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Cinzel_Decorative, Poppins } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/spiritual/header";
 import { Footer } from "@/components/spiritual/footer";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "next-themes";
@@ -23,7 +22,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Dharma Hundi",
-  description: "A Worldwide Dharma Movement",
+  description: "A Worldwide Dharma Movement - Making Dharma a Daily Habit",
 };
 
 export default function RootLayout({

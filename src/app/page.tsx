@@ -1,12 +1,13 @@
 'use client'
 
 import { HeroSection } from '@/components/blocks/hero-section'
+import { CategoriesCarousel } from '@/components/blocks/categories-carousel'
+import { ContactSection } from '@/components/blocks/contact-section'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Label } from '@/components/ui/label'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Heart, ChevronRight, Shield, Users, Target, HeartHandshake } from 'lucide-react'
+
+// Dharma Hundi Main Page
 
 const categories = [
   {
@@ -86,16 +87,16 @@ export default function Home() {
     <div>
       <HeroSection />
 
-      {/* Brand Scrolling Section */}
-      <section className="py-12 bg-card/20 overflow-hidden">
+      {/* 7 Daanams Scrolling Chip Strip (Before Vision) */}
+      <section className="py-5 bg-amber-800 overflow-hidden border-y border-amber-700">
         <div className="relative">
-          <div className="flex whitespace-nowrap animate-marquee">
-            {[...Array(2)].map((_, setIndex) => (
+          <div className="flex whitespace-nowrap animate-marquee" style={{ animationDuration: '25s' }}>
+            {[...Array(4)].map((_, setIndex) => (
               <div key={setIndex} className="inline-flex">
                 {categories.map((category) => (
                   <span
                     key={`${setIndex}-${category.slug}`}
-                    className="inline-block mx-6 md:mx-8 px-6 md:px-8 py-2 md:py-3 bg-foreground rounded-full text-base md:text-lg lg:text-xl font-serif font-bold text-background tracking-wide uppercase shadow-md"
+                    className="inline-block mx-3 md:mx-4 px-3 md:px-5 py-1 md:py-1.5 bg-amber-950/50 backdrop-blur-sm rounded-full text-xs md:text-sm lg:text-base font-serif font-semibold text-white tracking-wide uppercase shadow-sm border border-amber-700"
                   >
                     {category.name}
                   </span>
@@ -313,57 +314,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Seven Sacred Categories */}
-      <section id="categories" className="py-24 md:py-28 bg-gradient-to-b from-accent/10 via-transparent to-background">
-        <div className="container mx-auto px-6 md:px-12">
-          <div className="text-center mb-16 md:mb-20 space-y-6">
-            <div className="text-6xl md:text-7xl mb-6">🪷</div>
-            <h2 className="text-4xl md:text-5xl font-normal text-foreground">
-              Seven Sacred Categories
-            </h2>
-            <p className="text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto">
-              Each category represents a timeless path of giving.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {categories.map((category, index) => (
-              <div key={index} className="group">
-                <Card className="bg-card border-border/30 hover:border-primary/40 transition-all duration-300 rounded-2xl hover:-translate-y-1">
-                  <div className="h-2 bg-gradient-to-r from-primary/50 to-primary/60"></div>
-                  <CardHeader className="pb-5">
-                    <div className="flex items-start gap-3">
-                      <div className="text-4xl md:text-5xl">
-                        {category.icon}
-                      </div>
-                      <div className="flex-1">
-                        <CardTitle className="text-2xl md:text-3xl font-normal text-foreground group-hover:text-primary transition-colors">
-                          {category.name}
-                        </CardTitle>
-                        <CardDescription className="text-sm md:text-base font-medium text-foreground/60 mt-1">
-                          {category.title}
-                        </CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-5 pt-5">
-                    <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
-                      {category.description}
-                    </p>
-                    <div className="flex items-center justify-between pt-4 border-t border-border/20">
-                      <div className="flex items-center gap-2 text-sm md:text-base text-primary/80 font-medium">
-                        <span className="text-lg md:text-xl">✨</span>
-                        <span>{category.impact}</span>
-                      </div>
-                      <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-foreground/30 group-hover:text-primary/80 group-hover:translate-x-1 transition-all duration-200" />
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Seven Sacred Categories - Horizontal Carousel */}
+      <CategoriesCarousel categories={categories} />
 
       {/* Core Message Section */}
       <section id="core-message" className="py-24 md:py-28 bg-gradient-to-b from-muted/20 via-transparent to-background relative overflow-hidden">
@@ -521,63 +473,9 @@ export default function Home() {
           </div>
         </div>
       </section>
-              <CardContent className="px-6 md:px-8 pb-6">
-                <form className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-3">
-                      <Label htmlFor="name" className="text-base font-normal text-foreground">Full Name</Label>
-                      <Input 
-                        id="name" 
-                        placeholder="Your name" 
-                        className="border-border/30 bg-background focus:border-primary/50 h-12 text-base"
-                        suppressHydrationWarning
-                      />
-                    </div>
-                    <div className="space-y-3">
-                      <Label htmlFor="email" className="text-base font-normal text-foreground">Email Address</Label>
-                      <Input 
-                        id="email" 
-                        type="email" 
-                        placeholder="your@email.com" 
-                        className="border-border/30 bg-background focus:border-primary/50 h-12 text-base"
-                        suppressHydrationWarning
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    <Label htmlFor="subject" className="text-base font-normal text-foreground">Subject</Label>
-                      <Input 
-                        id="subject" 
-                        placeholder="How can we help you?" 
-                        className="border-border/30 bg-background focus:border-primary/50 h-12 text-base"
-                        suppressHydrationWarning
-                      />
-                    </div>
-                  <div className="space-y-3">
-                    <Label htmlFor="message" className="text-base font-normal text-foreground">Message</Label>
-                      <Textarea
-                        id="message"
-                        placeholder="Tell us more..."
-                        rows={6}
-                        className="border-border/30 bg-background focus:border-primary/50 resize-none text-base"
-                        suppressHydrationWarning
-                      />
-                    </div>
-                  <Button 
-                    type="submit" 
-                    size="lg"
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-4 transition-all duration-200"
-                    suppressHydrationWarning
-                  >
-                    <Heart className="mr-2 h-5 w-5" />
-                    Send Message
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
+
+      {/* Contact Section */}
+      <ContactSection />
     </div>
   )
 }
